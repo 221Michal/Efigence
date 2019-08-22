@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Efigence</title>
-    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div>Efigence</div>
+    <div class="container">
+        <header>
+            <span class="header-back">cofnij</span>
+            <h2 class="header-title">Raporty</h2>
+        </header>
+        <section>
+            <div class="content-box">
+                <select class="custom-select">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box">
+                <div id="article-list"></div>
+            </div>
+        </section>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
 </body>
 </html>

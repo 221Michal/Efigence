@@ -16,5 +16,13 @@ function loadJSON(callback) {
 }
 
 function fetchJson(data) {
-  console.log(data)
+  renderArticle(JSON.parse(data));
+}
+
+function renderArticle(article) {
+  var articleList = document.getElementById('article-list');
+  var html = article.map(function (element) {
+    return '<li>' + element.title + '</li>';
+  }).join('');
+  articleList.innerHTML  = html;
 }
