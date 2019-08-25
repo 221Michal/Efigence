@@ -1,9 +1,10 @@
 let json;
-let categores = ['all'];
+let categores = ['Wszystkie'];
 let years = [];
 let selectedYear;
-let selectedCategory = 'all';
-let seletYears = document.getElementsByClassName('custom-select');
+let selectedCategory = 'Wszystkie';
+let reportToRender= [] ;
+let seletYears = document.getElementsByClassName('date-select');
 let tagList = document.getElementsByClassName('category-selects');
 
 loadJSON(fetchJson);
@@ -67,14 +68,14 @@ function getParametrsFromJson() {
     return '<button class="cat-btn" onclick="selectCat(event)">' + cat + '</button>'
   }).join('');
   tagList[0].innerHTML = catList;
+  document.getElementsByClassName('cat-btn')[0].classList.add('active')
 }
 
 function selectReportsToRender() {
-  let reportToRender = [];
   json.forEach(function (item) {
     let date = new Date(item.date).getFullYear();
     if (date === selectedYear) {
-      if (selectedCategory === 'all') reportToRender.push(item);
+      if (selectedCategory === 'Wszystkie') reportToRender.push(item);
       else {
         let catCheck = selectedCategory.find(function (cat) {
           return cat === item.category
@@ -83,70 +84,130 @@ function selectReportsToRender() {
       }
     }
   });
-  renderReports(reportToRender)
+  renderReports()
 }
 
-function renderReports(article) {
-  let articleList = document.getElementById('article-list');
-  let html = article.map(function (element) {
+function renderReports() {
+  let reportList = document.getElementById('report-list');
+  let html = reportToRender.map(function (element) {
     let date = new Date(element.date);
+    let reportDate = (
+      '<div class="date">'
+        + date.getDay()+'.'+date.getMonth()+'.'+date.getFullYear()+
+      '</div>'
+      +
+      '<div class="date">'
+        + date.getHours() +':'+ date.getMinutes() +
+      '</div>'
+      +
+      '<div class="report-cat">'
+        +'Raporty '+ element.category +
+      '</div>'
+    );
+    let links;
+    if (element.files.length === 0) links = '';
+    else if (element.files.length === 1) {
+      links= (
+        '<a href="#">'
+        +element.files[0].filename+' ('+element.files[0].filesize+'KB)'+
+        '</a>'
+      )
+    } else {
+      let key = Math.random();
+      links = (
+        '<a href="#" onclick="toggleLinks('+key+')">Pliki do pobrania' +
+        ' ('
+        +element.files.length+
+        ')' +
+        '</a>' +
+        '<ul id='+key+' class="file-list hidden">'
+         +
+          element.files.map(function (link) {
+            return (
+                '<li>' +
+                  '<a href="#">'
+                    +link.filename+' ('+link.filesize+'KB)'+
+                  '</a>' +
+                '</li>'
+            )
+          }).join('')
+          +
+        '</ul>'
+      )
+    }
     return (
       '<div class="report">'
         +
         '<div class="report-date">'
-          +
-          date.getFullYear()
-          +
+          +reportDate+
         '</div>'
         +
         '<div class="report-content">'
           +
           '<h4 class="report-title">'
-            +
-            element.title
-            +
+            +element.title+
           '</h4>'
           +
           '<p class="report-descriptionn">'
-            +
-            element.description
+            +element.description+
+          '</p>'
+          +
+          '<div class="report-link">'
+          +'<a href="#">Zobacz raport</a>'+links+
+          '</div>'
           +
         '</div>'
         +
       '</div>'
     )
   }).join('');
-  articleList.innerHTML  = html;
+  reportList.innerHTML  = html;
 }
 
 function selectChange(year) {
+  reportToRender= [];
   selectedYear = parseInt(year);
   selectReportsToRender();
 }
 
 function selectCat(e) {
+  reportToRender= [];
   let target = e.target;
+  cat = target.innerText;
+  let active = document.getElementsByClassName("active");
+  if (cat === 'Wszystkie') {
+    while (active.length)
+      active[0].classList.remove("active");
+  }
   if (target.classList.contains('active')) target.classList.remove('active');
    else  target.classList.add('active');
-  cat = target.innerText;
-  if (cat === 'all') selectedCategory = 'all';
+  if (cat === 'Wszystkie') selectedCategory = 'Wszystkie';
   else {
-    if (selectedCategory === 'all') selectedCategory = [cat];
+    if (selectedCategory === 'Wszystkie') {
+      active[0].classList.remove("active");
+      selectedCategory = [cat];
+    }
     else {
      let catCheck = selectedCategory.find(function (item) {
        return item === cat
      });
       if (catCheck) {
         selectedCategory.remove(cat);
-        if (selectedCategory.length === 0 ) selectedCategory = 'all'
+        if (selectedCategory.length === 0 ) selectedCategory = 'Wszystkie'
       } else  selectedCategory.push(cat)
     }
   }
   selectReportsToRender();
 }
 
+function toggleLinks(key) {
+  let fileLlist = document.getElementById(key);
+  if (fileLlist.classList.contains('hidden')) fileLlist.classList.remove('hidden');
+  else fileLlist.classList.add('hidden');
+}
+
 Array.prototype.remove = function() {
-  var what, a = arguments, L = a.length, ax;
+  let what, a = arguments, L = a.length, ax;
   while (L && this.length) {
     what = a[--L];
     while ((ax = this.indexOf(what)) !== -1) {

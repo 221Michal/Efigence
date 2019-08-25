@@ -1,5 +1,8 @@
 body {
   background: #F2F2F2; }
+  body h1 {
+    padding-top: 20px;
+    font-weight: lighter; }
   body .container header {
     position: relative;
     text-align: center; }
@@ -7,16 +10,84 @@ body {
       position: absolute;
       top: 50%;
       left: 10px; }
+      body .container header .header-back .img-back {
+        height: 30px; }
   body .container section .content-box {
     margin: 50px 0;
     background: white;
     padding: 40px; }
-    body .container section .content-box .category-selects .cat-btn.active {
-      background: blue; }
-    body .container section .content-box .report {
+    body .container section .content-box .date-search {
       display: flex;
-      border-bottom: 1px solid grey; }
-      body .container section .content-box .report .report-date {
-        flex-basis: 30%; }
+      margin-bottom: 40px; }
+      body .container section .content-box .date-search .date-select {
+        margin-right: 30px;
+        padding: 0 20px;
+        width: 130px;
+        font-size: 20px;
+        height: 70px;
+        background: #FFFFFF;
+        border: none;
+        border-bottom: 2px solid black;
+        -webkit-box-shadow: 0px 0px 14px -8px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 14px -8px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 14px -8px rgba(0, 0, 0, 0.75); }
+      body .container section .content-box .date-search .search .search-input {
+        height: 70px;
+        border: none;
+        border-bottom: 2px solid black;
+        -webkit-box-shadow: 0px 0px 14px -8px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 14px -8px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 14px -8px rgba(0, 0, 0, 0.75);
+        padding-right: 180px; }
+      body .container section .content-box .date-search .search .search-btn {
+        height: 40px;
+        position: absolute;
+        right: 10px;
+        top: 15px;
+        z-index: 10; }
+        body .container section .content-box .date-search .search .search-btn button.search {
+          background: #65C1D4;
+          color: #FFFFFF;
+          border-radius: 20px;
+          border: none;
+          padding: 0 40px; }
+    body .container section .content-box .category-selects .cat-btn {
+      padding: 5px 15px;
+      background: white;
+      border-radius: 10px;
+      margin-right: 10px;
+      border: 1px solid lightgray;
+      color: lightgray;
+      text-transform: capitalize;
+      outline: none; }
+      body .container section .content-box .category-selects .cat-btn.active {
+        background: #F7FCFD;
+        color: black; }
+    body .container section .content-box #report-list .report {
+      display: flex;
+      border-bottom: 1px solid lightgray;
+      margin-bottom: 20px; }
+      body .container section .content-box #report-list .report a {
+        margin-right: 40px;
+        color: #6DC4D6; }
+        body .container section .content-box #report-list .report a:focus, body .container section .content-box #report-list .report a:hover {
+          color: #6DC4D6; }
+      body .container section .content-box #report-list .report .report-date {
+        flex-basis: 20%; }
+        body .container section .content-box #report-list .report .report-date .date {
+          font-weight: bold; }
+        body .container section .content-box #report-list .report .report-date .report-cat {
+          padding-top: 20px; }
+      body .container section .content-box #report-list .report .report-content .report-link {
+        margin-bottom: 20px; }
+        body .container section .content-box #report-list .report .report-content .report-link .file-list {
+          list-style: none;
+          margin-left: 140px;
+          padding-left: 0;
+          padding-top: 10px;
+          margin-top: 10px;
+          border-top: 1px solid lightgray; }
+  body .hidden {
+    display: none; }
 
 /*# sourceMappingURL=main.css.map */

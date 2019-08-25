@@ -12,24 +12,27 @@
 <body>
     <div class="container">
         <header>
-            <span class="header-back">cofnij</span>
-            <h2 class="header-title">Raporty</h2>
+            <span class="header-back"><img class="img-back" src="arrow_left-512.png"></span>
+            <h1 class="header-title">Raporty</h1>
         </header>
         <section>
             <div class="content-box">
-                <select onchange="selectChange(this.options[this.selectedIndex].value)" class="custom-select">
-                </select>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                <div class="date-search">
+                    <select onchange="selectChange(this.options[this.selectedIndex].value)" class="date-select">
+                    </select>
+                    <div class="search input-group mb-3">
+                        <input type="text" class="form-control search-input" placeholder="Podaj nazwę lub fragment rabortu" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append search-btn" >
+                            <button class="btn btn-outline-secondary search" type="button">Wyszukaj</button>
+                        </div>
                     </div>
                 </div>
+
                 <div class="category-selects">
                 </div>
             </div>
             <div class="content-box">
-                <div id="article-list"></div>
+                <div id="report-list"></div>
             </div>
         </section>
     </div>
