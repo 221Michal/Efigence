@@ -1,9 +1,10 @@
 let json;
-let categores = [];
+let categores = ['all'];
 let years = [];
 let selectedYear;
 let selectedCategory = 'all';
 let seletYears = document.getElementsByClassName('custom-select');
+let tagList = document.getElementsByClassName('category-selects');
 
 loadJSON(fetchJson);
 
@@ -61,6 +62,11 @@ function getParametrsFromJson() {
   selectedYear = years[0];
   selectReportsToRender();
 
+  //display categores
+  let catList = categores.map(function (cat) {
+    return '<button class="cat-btn" onclick="selectCat(event)">' + cat + '</button>'
+  }).join('');
+  tagList[0].innerHTML = catList;
 }
 
 function selectReportsToRender() {
@@ -70,7 +76,10 @@ function selectReportsToRender() {
     if (date === selectedYear) {
       if (selectedCategory === 'all') reportToRender.push(item);
       else {
-        if (item.category === selectedCategory) reportToRender.push(item);
+        let catCheck = selectedCategory.find(function (cat) {
+          return cat === item.category
+        });
+        if (catCheck) reportToRender.push(item);
       }
     }
   });
@@ -80,7 +89,32 @@ function selectReportsToRender() {
 function renderReports(article) {
   let articleList = document.getElementById('article-list');
   let html = article.map(function (element) {
-    return '<li>' + element.title + '</li>';
+    let date = new Date(element.date);
+    return (
+      '<div class="report">'
+        +
+        '<div class="report-date">'
+          +
+          date.getFullYear()
+          +
+        '</div>'
+        +
+        '<div class="report-content">'
+          +
+          '<h4 class="report-title">'
+            +
+            element.title
+            +
+          '</h4>'
+          +
+          '<p class="report-descriptionn">'
+            +
+            element.description
+          +
+        '</div>'
+        +
+      '</div>'
+    )
   }).join('');
   articleList.innerHTML  = html;
 }
@@ -89,3 +123,35 @@ function selectChange(year) {
   selectedYear = parseInt(year);
   selectReportsToRender();
 }
+
+function selectCat(e) {
+  let target = e.target;
+  if (target.classList.contains('active')) target.classList.remove('active');
+   else  target.classList.add('active');
+  cat = target.innerText;
+  if (cat === 'all') selectedCategory = 'all';
+  else {
+    if (selectedCategory === 'all') selectedCategory = [cat];
+    else {
+     let catCheck = selectedCategory.find(function (item) {
+       return item === cat
+     });
+      if (catCheck) {
+        selectedCategory.remove(cat);
+        if (selectedCategory.length === 0 ) selectedCategory = 'all'
+      } else  selectedCategory.push(cat)
+    }
+  }
+  selectReportsToRender();
+}
+
+Array.prototype.remove = function() {
+  var what, a = arguments, L = a.length, ax;
+  while (L && this.length) {
+    what = a[--L];
+    while ((ax = this.indexOf(what)) !== -1) {
+      this.splice(ax, 1);
+    }
+  }
+  return this;
+};
