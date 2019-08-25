@@ -1,6 +1,8 @@
 let json;
 let categores = [];
 let years = [];
+let selectedYear;
+let selectedCategory = 'all';
 let seletYears = document.getElementsByClassName('custom-select');
 
 loadJSON(fetchJson);
@@ -56,18 +58,19 @@ function getParametrsFromJson() {
     return '<option>' + year + '</option>'
   }).join('');
   seletYears[0].innerHTML = yearsList;
-  selectReportsToRender(years[0], 'all');
+  selectedYear = years[0];
+  selectReportsToRender();
 
 }
 
-function selectReportsToRender(year, category) {
+function selectReportsToRender() {
   let reportToRender = [];
   json.forEach(function (item) {
     let date = new Date(item.date).getFullYear();
-    if (date === year) {
-      if (category === 'all') reportToRender.push(item);
+    if (date === selectedYear) {
+      if (selectedCategory === 'all') reportToRender.push(item);
       else {
-        if (item.category === category) reportToRender.push(item);
+        if (item.category === selectedCategory) reportToRender.push(item);
       }
     }
   });
@@ -82,6 +85,7 @@ function renderReports(article) {
   articleList.innerHTML  = html;
 }
 
-// seletYears.addEventListener('change', (event) => {
-//   console.log("asd")
-// });
+function selectChange(year) {
+  selectedYear = parseInt(year);
+  selectReportsToRender();
+}
