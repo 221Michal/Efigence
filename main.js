@@ -72,6 +72,8 @@ function getParametrsFromJson() {
 }
 
 function selectReportsToRender() {
+  document.getElementsByClassName('search-input')[0].value = '';
+  reportToRender = [];
   json.forEach(function (item) {
     let date = new Date(item.date).getFullYear();
     if (date === selectedYear) {
@@ -204,6 +206,21 @@ function toggleLinks(key) {
   let fileLlist = document.getElementById(key);
   if (fileLlist.classList.contains('hidden')) fileLlist.classList.remove('hidden');
   else fileLlist.classList.add('hidden');
+}
+
+function search() {
+  let inputValue =document.getElementsByClassName('search-input')[0].value;
+  if (inputValue.length === 0) {
+    selectReportsToRender();
+  } else {
+    let searchReports= [];
+    reportToRender.find(function (item) {
+      if (item.title.includes(inputValue)) searchReports.push(item);
+      else if (item.description.includes(inputValue)) searchReports.push(item);
+    });
+    reportToRender = searchReports;
+    renderReports()
+  }
 }
 
 Array.prototype.remove = function() {

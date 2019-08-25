@@ -20,6 +20,7 @@ body {
       display: flex;
       margin-bottom: 40px; }
       body .container section .content-box .date-search .date-select {
+        outline: none;
         margin-right: 30px;
         padding: 0 20px;
         width: 130px;
@@ -78,15 +79,17 @@ body {
           font-weight: bold; }
         body .container section .content-box #report-list .report .report-date .report-cat {
           padding-top: 20px; }
-      body .container section .content-box #report-list .report .report-content .report-link {
-        margin-bottom: 20px; }
-        body .container section .content-box #report-list .report .report-content .report-link .file-list {
-          list-style: none;
-          margin-left: 140px;
-          padding-left: 0;
-          padding-top: 10px;
-          margin-top: 10px;
-          border-top: 1px solid lightgray; }
+      body .container section .content-box #report-list .report .report-content {
+        width: 80%; }
+        body .container section .content-box #report-list .report .report-content .report-link {
+          margin-bottom: 20px; }
+          body .container section .content-box #report-list .report .report-content .report-link .file-list {
+            list-style: none;
+            margin-left: 140px;
+            padding-left: 0;
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid lightgray; }
   body .hidden {
     display: none; }
 
