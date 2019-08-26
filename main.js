@@ -5,8 +5,8 @@ let years = [];
 let selectedYear;
 let selectedCategory = 'Wszystkie';
 let reportToRender= [] ;
-let seletYears = document.getElementsByClassName('date-select');
-let tagList = document.getElementsByClassName('category-selects');
+const seletYears = document.getElementsByClassName('date-select');
+const tagList = document.getElementsByClassName('category-selects');
 
 
 //fetch data
@@ -36,16 +36,16 @@ function getParametrsFromJson() {
     if (categores.length === 0) {
       categores.push(item.category);
     } else {
-      let catCheck = categores.find(function (catItem) {
+      const catCheck = categores.find(function (catItem) {
         return catItem === item.category
       });
       if (!catCheck) categores.push(item.category)
     }
-    let date = new Date(item.date).getFullYear();
+    const date = new Date(item.date).getFullYear();
     if (years.length === 0) {
       years.push(date);
     } else {
-      let yearCheck = years.find(function (year) {
+      const yearCheck = years.find(function (year) {
         return year === date
       });
       if (!yearCheck) years.push(date)
@@ -54,7 +54,7 @@ function getParametrsFromJson() {
 
   //select year
   years.sort(function(a, b){return b-a});
-  let yearsList = years.map(function (year) {
+  const yearsList = years.map(function (year) {
     return '<option>' + year + '</option>'
   }).join('');
   seletYears[0].innerHTML = yearsList;
@@ -62,7 +62,7 @@ function getParametrsFromJson() {
   selectReportsToRender();
 
   //display categores
-  let catList = categores.map(function (cat) {
+  const catList = categores.map(function (cat) {
     return '<button class="cat-btn" onclick="selectCat(event)">' + cat + '</button>'
   }).join('');
   tagList[0].innerHTML = catList;
@@ -73,7 +73,7 @@ function selectReportsToRender() {
   document.getElementsByClassName('search-input')[0].value = '';
   reportToRender = [];
   json.forEach(function (item) {
-    let date = new Date(item.date).getFullYear();
+    const date = new Date(item.date).getFullYear();
     if (date === selectedYear) {
       if (selectedCategory === 'Wszystkie') reportToRender.push(item);
       else {
@@ -88,9 +88,9 @@ function selectReportsToRender() {
 }
 
 function renderReports() {
-  let reportList = document.getElementById('report-list');
+  const reportList = document.getElementById('report-list');
   let html = reportToRender.map(function (element) {
-    let date = new Date(element.date);
+    const date = new Date(element.date);
     //create date view
     let reportDate = (
       '<div class="date">'
@@ -115,7 +115,7 @@ function renderReports() {
         '</a>'
       )
     } else {
-      let key = Math.random();
+      const key = Math.random();
       links = (
         '<a href="#" onclick="toggleLinks('+key+')">Pliki do pobrania' +
         ' ('
@@ -174,9 +174,9 @@ function selectChange(year) {
 
 function selectCat(e) {
   reportToRender= [];
-  let target = e.target;
-  cat = target.innerText;
-  let active = document.getElementsByClassName("active");
+  const target = e.target;
+  const cat = target.innerText;
+  const active = document.getElementsByClassName("active");
   if (cat === 'Wszystkie') {
     while (active.length)
       active[0].classList.remove("active");
@@ -195,7 +195,10 @@ function selectCat(e) {
      });
       if (catCheck) {
         selectedCategory.remove(cat);
-        if (selectedCategory.length === 0 ) selectedCategory = 'Wszystkie'
+        if (selectedCategory.length === 0 ) {
+          document.getElementsByClassName('cat-btn')[0].classList.add("active");
+          selectedCategory = 'Wszystkie'
+        }
       } else  selectedCategory.push(cat)
     }
   }
@@ -209,16 +212,14 @@ function toggleLinks(key) {
 }
 
 function search() {
-  let inputValue =document.getElementsByClassName('search-input')[0].value;
+  const inputValue =document.getElementsByClassName('search-input')[0].value;
   if (inputValue.length === 0) {
     selectReportsToRender();
   } else {
-    let searchReports= [];
-    reportToRender.find(function (item) {
-      if (item.title.includes(inputValue)) searchReports.push(item);
-      else if (item.description.includes(inputValue)) searchReports.push(item);
+    reportToRender = reportToRender.filter(function (item) {
+      if (item.title.includes(inputValue)) return true;
+      else if (item.description.includes(inputValue)) return true;
     });
-    reportToRender = searchReports;
     renderReports()
   }
 }
