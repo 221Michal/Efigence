@@ -1,3 +1,4 @@
+
 let json;
 let categores = ['Wszystkie'];
 let years = [];
@@ -7,16 +8,17 @@ let reportToRender= [] ;
 let seletYears = document.getElementsByClassName('date-select');
 let tagList = document.getElementsByClassName('category-selects');
 
+
+//fetch data
 loadJSON(fetchJson);
 
 function loadJSON(callback) {
 
   var xobj = new XMLHttpRequest();
   xobj.overrideMimeType("application/json");
-  xobj.open('GET', 'http://mmknet.pl/data.json', true); // Replace 'my_data' with the path to your file
+  xobj.open('GET', 'http://mmknet.pl/data.json', true);
   xobj.onreadystatechange = function () {
     if (xobj.readyState == 4 && xobj.status == "200") {
-      // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
       callback(xobj.responseText);
     }
   };
@@ -25,14 +27,11 @@ function loadJSON(callback) {
 
 function fetchJson(data) {
   json = JSON.parse(data);
-  console.log(json)
   getParametrsFromJson();
 }
 
 function getParametrsFromJson() {
-
   //get year and category from json
-
   json.forEach(function (item) {
     if (categores.length === 0) {
       categores.push(item.category);
@@ -54,7 +53,6 @@ function getParametrsFromJson() {
   });
 
   //select year
-
   years.sort(function(a, b){return b-a});
   let yearsList = years.map(function (year) {
     return '<option>' + year + '</option>'
@@ -93,6 +91,7 @@ function renderReports() {
   let reportList = document.getElementById('report-list');
   let html = reportToRender.map(function (element) {
     let date = new Date(element.date);
+    //create date view
     let reportDate = (
       '<div class="date">'
         + date.getDay()+'.'+date.getMonth()+'.'+date.getFullYear()+
@@ -106,6 +105,7 @@ function renderReports() {
         +'Raporty '+ element.category +
       '</div>'
     );
+    //create links view
     let links;
     if (element.files.length === 0) links = '';
     else if (element.files.length === 1) {
